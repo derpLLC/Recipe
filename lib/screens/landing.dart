@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipes/utils/routes.dart';
 
 class Landing extends StatelessWidget {
   const Landing({Key? key}) : super(key: key);
@@ -73,6 +74,10 @@ class Landing extends StatelessWidget {
                         decoration: BoxDecoration(
                             shape: BoxShape.circle, color: Colors.white),
                         child: InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, MyRoutes.homescreenRoute);
+                          },
                           child: Icon(
                             Icons.arrow_forward,
                             color: Colors.greenAccent,

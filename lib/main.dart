@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipes/screens/homscreen.dart';
 import 'package:recipes/screens/landing.dart';
 import 'package:recipes/utils/routes.dart';
 
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
       routes: {
         "/": (context) => Landing(),
         MyRoutes.landingRoute: (context) => Landing(),
+        MyRoutes.homescreenRoute: (context) => HomeScreen(),
       },
     );
   }
