@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:recipes/api/randomRecipe.dart';
+import 'package:recipes/utils/routes.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -145,9 +146,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(30),
-                          child: Image(
-                            image: NetworkImage(randomRecipe['strMealThumb']),
-                            fit: BoxFit.cover,
+                          child: InkWell(
+                            child: Image(
+                              image: NetworkImage(randomRecipe['strMealThumb']),
+                              fit: BoxFit.cover,
+                            ),
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, MyRoutes.recipePageRoute);
+                            },
                           ),
                         ),
                         Row(
