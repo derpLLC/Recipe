@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipes/screens/homscreen.dart';
 import 'package:recipes/screens/landing.dart';
+import 'package:recipes/screens/recipePage.dart';
 import 'package:recipes/utils/routes.dart';
 
 void main() {
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
         "/": (context) => Landing(),
         MyRoutes.landingRoute: (context) => Landing(),
         MyRoutes.homescreenRoute: (context) => HomeScreen(),
+        MyRoutes.recipePageRoute: (context) => RecipePage(),
       },
     );
   }
