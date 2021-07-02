@@ -12,11 +12,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   var randomRecipe = new HashMap();
+  bool _isRandomRecipeReady = false;
 
   void getRecipe() async {
     var data = await RandomRecipe().getRandomRecipe();
     setState(() {
       randomRecipe = data;
+      _isRandomRecipeReady = true;
     });
   }
 
@@ -137,58 +139,60 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 40),
             Container(
               height: size.height * 0.5,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: Image(
-                      image: NetworkImage(randomRecipe['strMealThumb']),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 20, right: 20),
-                        child: Container(
-                          height: size.height * 0.060,
-                          width: size.width * 0.12,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.grey.shade300,
-                          ),
-                          child: InkWell(
-                            child: Icon(
-                              Icons.bookmark,
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 40),
-                  Padding(
-                    padding: EdgeInsets.only(left: 20),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              child: _isRandomRecipeReady
+                  ? Stack(
+                      fit: StackFit.expand,
                       children: [
-                        Text(
-                          randomRecipe['strMeal'],
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 30),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(30),
+                          child: Image(
+                            image: NetworkImage(randomRecipe['strMealThumb']),
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                        SizedBox(height: 70)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(top: 20, right: 20),
+                              child: Container(
+                                height: size.height * 0.060,
+                                width: size.width * 0.12,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.grey.shade300,
+                                ),
+                                child: InkWell(
+                                  child: Icon(
+                                    Icons.bookmark,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(height: 40),
+                        Padding(
+                          padding: EdgeInsets.only(left: 20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                randomRecipe['strMeal'],
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30),
+                              ),
+                              SizedBox(height: 70)
+                            ],
+                          ),
+                        ),
                       ],
-                    ),
-                  ),
-                ],
-              ),
+                    )
+                  : Center(child: CircularProgressIndicator()),
             )
           ],
         ),
