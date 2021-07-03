@@ -13,7 +13,6 @@ class _HomeScreenState extends State<HomeScreen> {
   var randomRecipe;
   List<String?> ingredientList = [];
   List<String?> measurementList = [];
-  int _ingredientNumbers = 0;
   bool _isRandomRecipeReady = false;
 
   void getRandomRecipe() async {
@@ -21,20 +20,17 @@ class _HomeScreenState extends State<HomeScreen> {
     var ingredients = RegExp(r'strIngredient*');
     var measure = RegExp(r'strMeasure*');
 
-    var ingredientMeasurements = <String>{};
-
     data.forEach((k, v) => {
           if (ingredients.hasMatch(k) && v != '') {ingredientList.add(v)}
         });
 
     data.forEach((k, v) => {
-          if (measure.hasMatch(k) && v != '') {ingredientMeasurements.add(v)}
+          if (measure.hasMatch(k) && v != '') {measurementList.add(v)}
         });
 
     setState(() {
       randomRecipe = data;
       _isRandomRecipeReady = true;
-      _ingredientNumbers = ingredientList.length;
     });
   }
 
@@ -172,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   arguments: {
                                     'recipe': randomRecipe,
                                     'ingredients': ingredientList,
-                                    'measurements': measurementList
+                                    'measurements': measurementList,
                                   })
                             },
                           ),
@@ -215,7 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               SizedBox(height: 10),
                               Text(
-                                '$_ingredientNumbers Ingredients',
+                                '${ingredientList.length} Ingredients',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
