@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:recipes/api/randomRecipe.dart';
 import 'package:recipes/utils/routes.dart';
@@ -12,21 +10,38 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var randomRecipe = new HashMap();
+  var randomRecipe;
+  List<String?> ingredientList = [];
+  List<String?> measurementList = [];
+  int _ingredientNumbers = 0;
   bool _isRandomRecipeReady = false;
 
-  void getRecipe() async {
+  void getRandomRecipe() async {
     var data = await RandomRecipe().getRandomRecipe();
+    var ingredients = RegExp(r'strIngredient*');
+    var measure = RegExp(r'strMeasure*');
+
+    var ingredientMeasurements = <String>{};
+
+    data.forEach((k, v) => {
+          if (ingredients.hasMatch(k) && v != '') {ingredientList.add(v)}
+        });
+
+    data.forEach((k, v) => {
+          if (measure.hasMatch(k) && v != '') {ingredientMeasurements.add(v)}
+        });
+
     setState(() {
       randomRecipe = data;
       _isRandomRecipeReady = true;
+      _ingredientNumbers = ingredientList.length;
     });
   }
 
   @override
   void initState() {
     super.initState();
-    getRecipe();
+    getRandomRecipe();
   }
 
   @override
@@ -151,9 +166,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               image: NetworkImage(randomRecipe['strMealThumb']),
                               fit: BoxFit.cover,
                             ),
-                            onTap: () {
+                            onTap: () => {
                               Navigator.pushNamed(
-                                  context, MyRoutes.recipePageRoute);
+                                  context, MyRoutes.recipePageRoute,
+                                  arguments: {
+                                    'recipe': randomRecipe,
+                                    'ingredients': ingredientList,
+                                    'measurements': measurementList
+                                  })
                             },
                           ),
                         ),
@@ -193,7 +213,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                     fontWeight: FontWeight.bold,
                                     fontSize: 30),
                               ),
-                              SizedBox(height: 70)
+                              SizedBox(height: 10),
+                              Text(
+                                '$_ingredientNumbers Ingredients',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              ),
+                              SizedBox(height: 40),
                             ],
                           ),
                         ),

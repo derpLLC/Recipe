@@ -4,7 +4,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class RandomRecipe {
-  final String url = 'https://www.themealdb.com/api/json/v1/1/random.php';
+  // final String url = 'https://www.themealdb.com/api/json/v1/1/random.php';
+  final String url =
+      'https://www.themealdb.com/api/json/v1/1/lookup.php?i=52861';
 
   Future<dynamic> getRandomRecipe() async {
     var response = await http.get(Uri.parse(url));
