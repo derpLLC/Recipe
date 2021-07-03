@@ -14,9 +14,8 @@ class Landing extends StatelessWidget {
         children: [
           Opacity(
             opacity: 0.6,
-            child: Image(
-              image: NetworkImage(
-                  'https://images.pexels.com/photos/5929/food-salad-dinner-eating.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'),
+            child: Image.asset(
+              "assets/images/landing.png",
               fit: BoxFit.cover,
             ),
           ),
