@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.green.shade50,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Material(
-                  elevation: 5,
+                  elevation: 2,
                   borderRadius: BorderRadius.circular(10),
                   child: Container(
                     height: size.height * 0.060,
@@ -92,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: size.width * 0.12,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey.shade300,
+                    color: Colors.green.shade100,
                   ),
                   child: InkWell(
                     child: Icon(
@@ -112,11 +112,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: size.width * 0.25,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Colors.white,
+                    color: Colors.green,
                   ),
                   child: InkWell(
                     child: Center(
-                      child: Text('All'),
+                      child: Text(
+                        'All',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
                 ),
@@ -129,7 +132,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   child: InkWell(
                     child: Center(
-                      child: Text('Sushi'),
+                      child: Text(
+                        'Sushi',
+                        style: TextStyle(color: Colors.grey),
+                      ),
                     ),
                   ),
                 ),
@@ -142,7 +148,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   child: InkWell(
                     child: Center(
-                      child: Text('Burger'),
+                      child: Text(
+                        'Burger',
+                        style: TextStyle(color: Colors.grey),
+                      ),
                     ),
                   ),
                 )
@@ -226,6 +235,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   : Center(child: CircularProgressIndicator()),
             )
           ],
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        elevation: 0,
+        child: Container(
+          height: size.height * 0.06,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Icon(Icons.home_filled),
+              Icon(Icons.bookmark, color: Colors.grey),
+              Icon(Icons.shopping_bag_rounded, color: Colors.grey),
+              Icon(Icons.person, color: Colors.grey)
+            ],
+          ),
         ),
       ),
     );

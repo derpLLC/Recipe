@@ -20,6 +20,7 @@ class _RecipePageState extends State<RecipePage> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
+          // physics: const NeverScrollableScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.all(25.0),
             child: Column(
@@ -35,7 +36,11 @@ class _RecipePageState extends State<RecipePage> {
                         },
                       ),
                     ),
-                    Text(arguments['recipe']['strMeal']),
+                    Text(
+                      arguments['recipe']['strMeal'],
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    ),
                     Container(
                       child: InkWell(
                         child: Icon(Icons.more_horiz),
@@ -44,22 +49,63 @@ class _RecipePageState extends State<RecipePage> {
                   ],
                 ),
                 SizedBox(height: 40),
-                Container(height: size.height * 0.3, color: Colors.green),
-                SizedBox(height: 40),
+                Container(
+                  height: size.height * 0.3,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    image: DecorationImage(
+                        image:
+                            NetworkImage(arguments['recipe']['strMealThumb']),
+                        fit: BoxFit.cover),
+                    color: Colors.green,
+                  ),
+                ),
+                SizedBox(height: 30),
                 Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Ingredients'),
-                      Text('Servings'),
+                      Text(
+                        'Ingredients (${arguments['ingredients'].length})',
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold),
+                      ),
+                      Container(
+                        height: size.height * 0.06,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.greenAccent,
+                        ),
+                        padding: EdgeInsets.all(10),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton(
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            items: [
+                              DropdownMenuItem(
+                                child: Text(
+                                  '1 Servings',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                SizedBox(height: 40),
-                ListView.builder(
+                SizedBox(height: 20),
+                ListView.separated(
+                  separatorBuilder: (BuildContext context, int) {
+                    return SizedBox(height: 10);
+                  },
                   itemBuilder: _ingredientsList,
                   itemCount: arguments['ingredients'].length,
                   shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                 )
               ],
             ),
@@ -71,12 +117,22 @@ class _RecipePageState extends State<RecipePage> {
 
   Widget _ingredientsList(BuildContext context, int) {
     return Container(
-      height: size.height * 0.12,
-      color: Colors.yellow,
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      height: size.height * 0.10,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.grey.shade300,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(arguments['ingredients'][int]),
+          Text(
+            arguments['ingredients'][int],
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           Text(arguments['measurements'][int])
         ],
       ),
